@@ -7,20 +7,21 @@ class Worker
 {
     protected string $name;
     protected string $position;
+    protected array $jobs = ['manager', 'developer', 'tester'];
 
-    public function __construct(string $name, string $position)
+    public function __construct(string $name, string $position, array $jobs = [])
     {
         $this->setName($name);
-        $this->setPosition($position);
+        $this->setPosition($position, $this->jobs);
     }
 
     protected function setName(string $name): void
     {
         if (strlen($name) < 2) {
             throw new Exception('To short name!');
-        } else {
-            $this->name = $name;
         }
+
+        $this->name = $name;
     }
 
     protected function getName(): string
@@ -28,13 +29,13 @@ class Worker
         return $this->name;
     }
 
-    protected function setPosition(string $position): void
+    protected function setPosition(string $position, array $jobs): void
     {
-        if (!in_array($position, ['manager', 'developer', 'tester'])) {
+        if (!in_array($position, $jobs)) {
             throw new Exception('Unknown job!');
-        } else {
-            $this->position = $position;
         }
+
+        $this->position = $position;
     }
 
     protected function getPosition(): string
