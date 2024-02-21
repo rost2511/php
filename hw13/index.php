@@ -8,30 +8,23 @@
 //Для реалізації треба використати роботу з масивами, циклами та умовними операторами,
 //програма має зберігати список завдань у файлі та зчитувати його з файлу при кожному запуску програми, щоб зберегти дані між сеансами роботи.
 
-//В конструкторе если файл существует забираем в массив таски из файла и работаем с ним
-//В деструкторе перезаписываем файл
-//Или в каждом методе вызывать перезаписывание файла
-//uniqid - уникальный id
-//айди|название таски|приоритет|статус
-//через эксплоуд разбивать по разделителю
-
 define('DIR', __DIR__ . '/');
 define('CLASSES_DIR', __DIR__ . '/classes/');
 define('ENUMS_DIR', __DIR__ . '/enums/');
 
 require CLASSES_DIR . 'Task.php';
+require_once ENUMS_DIR . 'Status.php';
 
 try {
     $toDo1 = new Task('/var/www/html/hw13/todolists/todo1.txt');
-//    $toDo1->addTask('3333 task', 6);
+//    $toDo1->addTask('555 task', 5);
 //    try {
-//        $toDo1->deleteTask('65d36f086a5ba');
+//        $toDo1->deleteTask('65d62e2715760');
 //    } catch (Exception $exception) {
 //        echo "Exception: " . $exception->getMessage();
 //    }
-//    $toDo1->addTask('123123 task', 9);
-//    $toDo1->completeTask('65d36f08b60cd');
-//    print_r($toDo1->getTasks());
+//    $toDo1->completeTask('65d62ed21950e');
+    print_r($toDo1->getTasks());
 } catch (Exception $exception) {
     echo "Exception: " . $exception->getMessage();
 }

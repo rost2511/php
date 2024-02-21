@@ -5,5 +5,5 @@
 enum Status: string
 {
     case Done = 'done';
-    case NOT_DONE = 'not done';
+    case NotDone = 'not done';
 }

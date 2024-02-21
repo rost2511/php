@@ -7,20 +7,23 @@
 /**
  * Class for tasks list
  */
-class Task
+class Class2
 {
     private string $pathToFile;
+
+    private mixed $file;
 
     private array $fileContent = [];
 
     public function __construct(string $pathToFile)
     {
         $this->setPathToFile($pathToFile);
-        if (file_exists($this->pathToFile)) {
-            $this->setFileContent();
-        } else {
-            file_put_contents($this->pathToFile, '');
-        }
+        $this->openFile();
+    }
+
+    public function __destruct()
+    {
+        $this->closeFile();
     }
 
     /**
@@ -43,13 +46,41 @@ class Task
     }
 
     /**
-     * Method for writing changes to a file
+     * Method get content from property
+     * @return array
+     */
+    private function getFileContent(): array
+    {
+        return $this->fileContent;
+    }
+
+    /**
+     * Method for opening a file for changes
      * @return void
      */
-    private function writeFile(): void
+    private function openFile(): void
     {
-        $content = implode(PHP_EOL, $this->fileContent);
-        file_put_contents($this->pathToFile, $content);
+        $this->file = fopen($this->pathToFile, 'a+');
+    }
+
+    /**
+     * Method for writing changes to a file
+     * @param $file
+     * @param $string
+     * @return void
+     */
+    private function writeFile($file, $string): void
+    {
+        fwrite($file, $string);
+    }
+
+    /**
+     * Method for close file
+     * @return void
+     */
+    private function closeFile(): void
+    {
+        fclose($this->file);
     }
 
     /**
@@ -61,8 +92,7 @@ class Task
     public function addTask(string $taskName, int $priority): void
     {
         $task = uniqid() . "|$taskName|$priority|" . Status::NotDone->value . "\n";
-        $this->fileContent[] = $task;
-        $this->writeFile();
+        $this->writeFile($this->file, $task);
         $this->setFileContent();
     }
 
@@ -73,13 +103,13 @@ class Task
      */
     public function deleteTask(int|string $taskId): void
     {
-        foreach ($this->fileContent as $key => $value) {
-            $taskString = explode("|", $value);
-            if ($taskString[0] === $taskId) {
-                unset($this->fileContent[$key]);
+        $this->setFileContent();
+        file_put_contents($this->pathToFile, '');
+        foreach ($this->getFileContent() as $line) {
+            $taskString = explode("|", $line);
+            if ($taskString[0] != $taskId) {
+                $this->writeFile($this->file, $line . "\n");
             }
-            $this->writeFile();
-            $this->setFileContent();
         }
     }
 
@@ -90,15 +120,15 @@ class Task
      */
     public function completeTask($taskId): void
     {
-        foreach ($this->fileContent as $key => $value) {
-            $taskString = explode("|", $value);
+        $this->setFileContent();
+        file_put_contents($this->pathToFile, '');
+        foreach ($this->getFileContent() as $line) {
+            $taskString = explode("|", $line);
             if ($taskString[0] === $taskId) {
                 $taskString[3] = Status::Done->value;
-                $this->fileContent[$key] = implode("|", $taskString);
             }
+            $this->writeFile($this->file, implode("|", $taskString) . "\n");
         }
-        $this->writeFile();
-        $this->setFileContent();
     }
 
     /**
@@ -107,9 +137,10 @@ class Task
      */
     public function getTasks(): array
     {
-        $fileContent = $this->fileContent;
+        $this->setFileContent();
+        $fileContent = $this->getFileContent();
         $valuesToSort = [];
-        foreach ($fileContent as $line) {
+        foreach ($this->getFileContent() as $line) {
             $taskString = explode("|", $line);
             $valuesToSort[] = $taskString[2] ?? 0;
         }
