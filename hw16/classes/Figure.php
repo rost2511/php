@@ -5,7 +5,7 @@
  */
 abstract class Figure
 {
-    protected abstract function area();
+    protected abstract function area(): int|float;
 
-    protected abstract function perimeter();
+    protected abstract function perimeter(): int|float;
 }

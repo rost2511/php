@@ -25,7 +25,7 @@ class Rectangle extends Figure
      * Method set width
      * @param float $width
      */
-    protected function setWidth(float $width): void
+    protected function setWidth(int|float $width): void
     {
         $this->width = $width;
     }
@@ -34,7 +34,7 @@ class Rectangle extends Figure
      * Method set height
      * @param float $height
      */
-    protected function setHeight(float $height): void
+    protected function setHeight(int|float $height): void
     {
         $this->height = $height;
     }

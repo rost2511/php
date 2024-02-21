@@ -19,7 +19,7 @@ class Circle extends Figure
      * Method set radius of circle
      * @param float|int $radius
      */
-    protected function setRadius(float|int $radius): void
+    protected function setRadius(int|float $radius): void
     {
         $this->radius = $radius;
     }
@@ -28,7 +28,7 @@ class Circle extends Figure
      * Method get radius of circle
      * @return float|int
      */
-    public function getRadius(): float|int
+    public function getRadius(): int|float
     {
         return $this->radius;
     }
@@ -37,7 +37,7 @@ class Circle extends Figure
      * Method calculates the area of circle
      * @return float|int
      */
-    protected function area(): float|int
+    protected function area(): int|float
     {
         return M_PI * (pow($this->radius, 2));
     }
