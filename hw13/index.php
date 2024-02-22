@@ -17,13 +17,13 @@ require_once ENUMS_DIR . 'Status.php';
 
 try {
     $toDo1 = new Task('/var/www/html/hw13/todolists/todo1.txt');
-//    $toDo1->addTask('555 task', 5);
+//    $toDo1->addTask('111 task', 1);
 //    try {
-//        $toDo1->deleteTask('65d62e2715760');
+//        $toDo1->deleteTask('65d7231830dbe');
 //    } catch (Exception $exception) {
 //        echo "Exception: " . $exception->getMessage();
 //    }
-//    $toDo1->completeTask('65d62ed21950e');
+//    $toDo1->completeTask('65d7234405918');
     print_r($toDo1->getTasks());
 } catch (Exception $exception) {
     echo "Exception: " . $exception->getMessage();

@@ -16,11 +16,7 @@ class Task
     public function __construct(string $pathToFile)
     {
         $this->setPathToFile($pathToFile);
-        if (file_exists($this->pathToFile)) {
-            $this->setFileContent();
-        } else {
-            file_put_contents($this->pathToFile, '');
-        }
+        $this->setFileContent();
     }
 
     /**
@@ -39,7 +35,11 @@ class Task
      */
     private function setFileContent(): void
     {
-        $this->fileContent = file($this->pathToFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        if (file_exists($this->pathToFile)) {
+            $this->fileContent = file($this->pathToFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        } else {
+            file_put_contents($this->pathToFile, '');
+        }
     }
 
     /**
@@ -63,7 +63,6 @@ class Task
         $task = uniqid() . "|$taskName|$priority|" . Status::NotDone->value . "\n";
         $this->fileContent[] = $task;
         $this->writeFile();
-        $this->setFileContent();
     }
 
     /**
@@ -79,7 +78,6 @@ class Task
                 unset($this->fileContent[$key]);
             }
             $this->writeFile();
-            $this->setFileContent();
         }
     }
 
@@ -98,7 +96,6 @@ class Task
             }
         }
         $this->writeFile();
-        $this->setFileContent();
     }
 
     /**
