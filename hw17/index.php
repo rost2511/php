@@ -9,7 +9,7 @@ require TRAITS_DIR . 'Validation.php';
 require CLASSES_DIR . 'User.php';
 require CLASSES_DIR . 'Email.php';
 
-$userValidator = new User("Artur");
+$userValidator = new User("");
 try {
     print_r($userValidator->checkValidName() . PHP_EOL);
 } catch (Exception $exception) {

@@ -24,7 +24,7 @@ class GoodCode
      * @param int|float $b
      * @return int|float
      */
-    public function add_numbers(int|float $a, int|float $b): int|float
+    public function addNumbers(int|float $a, int|float $b): int|float
     {
         return $a + $b;
     }
